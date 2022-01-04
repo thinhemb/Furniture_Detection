@@ -14,3 +14,6 @@ torchaudio==0.10.1
 torchvision==0.11.2
 tornado==6.1
 tqdm==4.61.1
+opencv-contrib-python==4.5.4.60
+opencv-python==4.5.3.56
+opencv-python-headless==4.5.4.60
