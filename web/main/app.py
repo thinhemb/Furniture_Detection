@@ -122,20 +122,20 @@ if __name__ == '__main__':
         st.success("file successful")
     if image_dir is not '':
         predict(image_dir)
-    st.image("/home/thinh-do/Workspace/Furniture_detection/label_train.png",width=500)
+    st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/label_train.png",width=500)
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.header("Bed")
-        st.image('/home/thinh-do/Workspace/Furniture_detection/result/378detections.jpg')
+        st.image('https://github.com/thinhemb/Furniture_Detection/blob/master/result/378detections.jpg')
 
     with col2:
         st.header("Table")
-        st.image("/home/thinh-do/Workspace/Furniture_detection/result/27detections.jpg")
+        st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/result/27detections.jpg")
 
     with col3:
         st.header("Couch")
-        st.image("/home/thinh-do/Workspace/Furniture_detection/result/58detections.jpg")
+        st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/result/58detections.jpg")
     
 
 
