@@ -26,7 +26,7 @@ def load_img(file):
 
 
 def predict(image_dir):
-    model_path='./retinanet.pt'
+    model_path='./model_lite.pt'
     
     model = torch.load(model_path,map_location='cpu')
     
