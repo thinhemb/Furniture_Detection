@@ -14,6 +14,7 @@ model_urls = {
     'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
     'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
 }
+<<<<<<< HEAD
 class InvertedResidual(nn.Module):
     def __init__(self, inp, oup, stride, expand_ratio):
         super(InvertedResidual, self).__init__()
@@ -52,6 +53,9 @@ class ConvBNReLU(nn.Sequential):
             # Replace with ReLU
             nn.ReLU(inplace=False)
         )
+=======
+
+>>>>>>> 7d0dcd2d27114543a0b99f67ee3a7976e2d2615a
 
 class PyramidFeatures(nn.Module):
     def __init__(self, C3_size, C4_size, C5_size, feature_size=256):
@@ -264,6 +268,7 @@ class ResNet(nn.Module):
         for layer in self.modules():
             if isinstance(layer, nn.BatchNorm2d):
                 layer.eval()
+<<<<<<< HEAD
     def fuse_model(self):
         for m in self.modules():
             if type(m) == ConvBNReLU:
@@ -273,6 +278,9 @@ class ResNet(nn.Module):
                     if type(m.conv[idx]) == nn.Conv2d:
                         torch.quantization.fuse_modules(m.conv, [str(idx), str(idx + 1)], inplace=True)
     
+=======
+
+>>>>>>> 7d0dcd2d27114543a0b99f67ee3a7976e2d2615a
     def forward(self, inputs):
 
         if self.training:
