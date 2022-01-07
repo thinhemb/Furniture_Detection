@@ -26,7 +26,7 @@ def load_img(file):
 
 
 def predict(image_dir):
-    model_path='/home/thinh-do/Workspace/retinanet.pt'
+    model_path='./retinanet.pt'
     
     model = torch.load(model_path,map_location='cpu')
     
@@ -96,7 +96,7 @@ def predict(image_dir):
             draw_caption(image_orig, (x1, y1, x2, y2), caption)
             cv2.rectangle(image_orig, (x1, y1), (x2, y2), color=(0, 0, 255), thickness=2)
             st.write(label_name)
-        dir='../Image_result/'+image_dir.split('/')[-1]
+        dir='./result/'+image_dir.split('/')[-1]
         # print(dir)
         cv2.imwrite(dir, image_orig)
         if image_orig is not None:
@@ -115,30 +115,24 @@ if __name__ == '__main__':
         img=load_img(file)
         st.image(img, caption='Your photo want to recognize',width=500)
         # st.write(dir(file))
-        image_dir=os.path.join("../fileDir",file.name)
+        image_dir=os.path.join("fileDir",file.name)
         with open(image_dir,"wb") as f:
             f.write((file).getbuffer())
 			
         st.success("file successful")
     if image_dir is not '':
         predict(image_dir)
-    st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/label_train.png",width=500)
+    st.image("label_train.png",width=500)
     col1, col2, col3 = st.columns(3)
 
     with col1:
         st.header("Bed")
-        st.image('https://github.com/thinhemb/Furniture_Detection/blob/master/result/378detections.jpg')
+        st.image('./result/378detections.jpg')
 
     with col2:
         st.header("Table")
-        st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/result/27detections.jpg")
+        st.image("./result/27detections.jpg")
 
     with col3:
         st.header("Couch")
-        st.image("https://github.com/thinhemb/Furniture_Detection/blob/master/result/58detections.jpg")
-    
-
-
-    
-    
-        
+        st.image("./result/58detections.jpg")
