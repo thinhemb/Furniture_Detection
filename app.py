@@ -5,8 +5,7 @@ import time
 import cv2
 from PIL import Image
 import os
-from retinanet.model import ResNet
-from retinanet.utils import Bottleneck
+import io
 labels= {
     0: "Bed",
     1: "Table",
@@ -25,14 +24,11 @@ def load_img(file):
 
 
 
-def predict(image_dir):
-    model_path='./model_lite.pt'
+def predict(image_dir,model_path):
     
     model = torch.load(model_path,map_location='cpu')
-    
-    
-    
-    model.training = False
+
+    # model.training = False
     model.eval()
     
     image= cv2.imread(image_dir)
@@ -109,19 +105,30 @@ def predict(image_dir):
         # 
 if __name__ == '__main__':
     st.title("Nhận diện đồ nội thất")
-    file= st.file_uploader("Upload your file",type=['png','jpg'])
-    image_dir=''
-    if file is not None:
-        img=load_img(file)
-        st.image(img, caption='Your photo want to recognize',width=500)
+    st.write('Select file weight: 25 epochs or 35 epochs')
+    st.write("Download weight:",'https://drive.google.com/drive/folders/1FARMfz-FX6NRJaNUwg87VWfWVBYlXa3i?usp=sharing')
+    file_weight= st.file_uploader("Upload file weight ",type=['pt'])
+    if file_weight is not None:
+        st.info('Upload file weight success')
+        st.write('file weight:',file_weight)
+        model_path=os.path.join("./fileDir",file_weight.name)
+        with open(model_path,"wb") as f:
+            f.write((file_weight).getbuffer())
+
+        file= st.file_uploader("Upload your file",type=['png','jpg'])
+        image_dir=''
+        if file is not None:
+            img=load_img(file)
+            st.image(img, caption='Your photo want to recognize',width=500)
         # st.write(dir(file))
-        image_dir=os.path.join("fileDir",file.name)
-        with open(image_dir,"wb") as f:
-            f.write((file).getbuffer())
+            image_dir=os.path.join("./fileDir",file.name)
+            with open(image_dir,"wb") as f:
+                f.write((file).getbuffer())
 			
-        st.success("file successful")
-    if image_dir is not '':
-        predict(image_dir)
+            st.success("file successful")
+
+        if image_dir is not '':
+            predict(image_dir,model_path)
     st.image("label_train.png",width=500)
     col1, col2, col3 = st.columns(3)
 

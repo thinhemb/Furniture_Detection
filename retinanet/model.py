@@ -14,48 +14,6 @@ model_urls = {
     'resnet101': 'https://download.pytorch.org/models/resnet101-5d3b4d8f.pth',
     'resnet152': 'https://download.pytorch.org/models/resnet152-b121ed2d.pth',
 }
-<<<<<<< HEAD
-class InvertedResidual(nn.Module):
-    def __init__(self, inp, oup, stride, expand_ratio):
-        super(InvertedResidual, self).__init__()
-        self.stride = stride
-        assert stride in [1, 2]
-
-        hidden_dim = int(round(inp * expand_ratio))
-        self.use_res_connect = self.stride == 1 and inp == oup
-
-        layers = []
-        if expand_ratio != 1:
-            # pw
-            layers.append(ConvBNReLU(inp, hidden_dim, kernel_size=1))
-        layers.extend([
-            # dw
-            ConvBNReLU(hidden_dim, hidden_dim, stride=stride, groups=hidden_dim),
-            # pw-linear
-            nn.Conv2d(hidden_dim, oup, 1, 1, 0, bias=False),
-            nn.BatchNorm2d(oup, momentum=0.1),
-        ])
-        self.conv = nn.Sequential(*layers)
-        # Replace torch.add with floatfunctional
-        self.skip_add = nn.quantized.FloatFunctional()
-
-    def forward(self, x):
-        if self.use_res_connect:
-            return self.skip_add.add(x, self.conv(x))
-        else:
-            return self.conv(x)
-class ConvBNReLU(nn.Sequential):
-    def __init__(self, in_planes, out_planes, kernel_size=3, stride=1, groups=1):
-        padding = (kernel_size - 1) // 2
-        super(ConvBNReLU, self).__init__(
-            nn.Conv2d(in_planes, out_planes, kernel_size, stride, padding, groups=groups, bias=False),
-            nn.BatchNorm2d(out_planes, momentum=0.1),
-            # Replace with ReLU
-            nn.ReLU(inplace=False)
-        )
-=======
-
->>>>>>> 7d0dcd2d27114543a0b99f67ee3a7976e2d2615a
 
 class PyramidFeatures(nn.Module):
     def __init__(self, C3_size, C4_size, C5_size, feature_size=256):
@@ -268,19 +226,7 @@ class ResNet(nn.Module):
         for layer in self.modules():
             if isinstance(layer, nn.BatchNorm2d):
                 layer.eval()
-<<<<<<< HEAD
-    def fuse_model(self):
-        for m in self.modules():
-            if type(m) == ConvBNReLU:
-                torch.quantization.fuse_modules(m, ['0', '1', '2'], inplace=True)
-            if type(m) == InvertedResidual:
-                for idx in range(len(m.conv)):
-                    if type(m.conv[idx]) == nn.Conv2d:
-                        torch.quantization.fuse_modules(m.conv, [str(idx), str(idx + 1)], inplace=True)
-    
-=======
 
->>>>>>> 7d0dcd2d27114543a0b99f67ee3a7976e2d2615a
     def forward(self, inputs):
 
         if self.training:
