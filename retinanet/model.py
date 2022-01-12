@@ -186,6 +186,7 @@ class ResNet(nn.Module):
         self.clipBoxes = ClipBoxes()
 
         self.focalLoss = losses.FocalLoss()
+        
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -233,7 +234,7 @@ class ResNet(nn.Module):
             img_batch, annotations = inputs
         else:
             img_batch = inputs
-
+        
         x = self.conv1(img_batch)
         x = self.bn1(x)
         x = self.relu(x)
@@ -243,7 +244,7 @@ class ResNet(nn.Module):
         x2 = self.layer2(x1)
         x3 = self.layer3(x2)
         x4 = self.layer4(x3)
-
+        
         features = self.fpn([x2, x3, x4])
 
         regression = torch.cat([self.regressionModel(feature) for feature in features], dim=1)

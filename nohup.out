@@ -1,0 +1,21 @@
+
+  You can now view your Streamlit app in your browser.
+
+  Local URL: http://localhost:8501
+  Network URL: http://192.168.100.16:8501
+
+/home/thinh-do/Workspace/Furniture_Detection/app.py:121: SyntaxWarning: "is not" with a literal. Did you mean "!="?
+  if image_dir is not '':
+2022-01-12 17:50:34.910 Traceback (most recent call last):
+  File "/home/thinh-do/.local/lib/python3.8/site-packages/streamlit/script_runner.py", line 354, in _run_script
+    exec(code, module.__dict__)
+  File "/home/thinh-do/Workspace/Furniture_Detection/app.py", line 128, in <module>
+    st.image('./result/378detections.jpg')
+  File "/home/thinh-do/.local/lib/python3.8/site-packages/streamlit/elements/image.py", line 120, in image
+    marshall_images(
+  File "/home/thinh-do/.local/lib/python3.8/site-packages/streamlit/elements/image.py", line 370, in marshall_images
+    proto_img.url = image_to_url(
+  File "/home/thinh-do/.local/lib/python3.8/site-packages/streamlit/elements/image.py", line 286, in image_to_url
+    with open(image, "rb") as f:
+FileNotFoundError: [Errno 2] No such file or directory: './result/378detections.jpg'
+
